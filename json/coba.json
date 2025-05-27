@@ -1,0 +1,24 @@
+[
+    { 
+        "nama" : "Fadhil Ramadhan",
+        "umur" : 20, 
+        "nim"  : "2217020083",
+        "lulus": "true",
+        "hobby": [ "gaming","traveling","playing football"],
+        "pembimbing" : { 
+            "pembimbing1" : "Haditya Prasetyo",
+            "pembimbing2" : "Ozzy Secio Riza "
+        }
+    }, 
+    { 
+        "nama" : "Fadhil Ramadhan",
+        "umur" : 20, 
+        "nim"  : "2217020083",
+        "lulus": "true",
+        "hobby": [ "gaming","traveling","playing football"],
+        "pembimbing" : { 
+            "pembimbing1" : "Haditya Prasetyo",
+            "pembimbing2" : "Ozzy Secio Riza "
+        }
+    } 
+]
