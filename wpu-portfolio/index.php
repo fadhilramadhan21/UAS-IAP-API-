@@ -24,17 +24,16 @@ $latestVideoID = $result['items'][0]['id']['videoId'];
 
 // <-------------- IG API --------------->
 
-// Ganti dengan access token Instagram yang valid
-$access_token = 'IGAAOyYCsA6wxBZAE9kWkpfb0RvSTNrd2hMdXJZAbVlxbW1PLUtXVExkMVpTTTBtXzc4TWctZAjBWaHBTRWpnTENRcVFMbkZAvV3lGOGVITDdaRzZAmeEkwSnNyRm5scWY5SzJCNUpNXzYwVTJuZAndoSy1TNDFWSzlrRlF0ajZA3QlduSQZDZD';
+// Instagram API
+$instagramResult = get_CURL('https://graph.instagram.com/me?fields=username,profile_picture_url,followers_count&access_token=IGAAjx0ZB5JZBJlBZAE4zazBNZAWttT2U3bFRzMXhycXVsWFYyMGpPYUhPZADRfeDBYZAWhWWVN6VTNRczB0dTRhX01RTDFaeTAtZAXlTQ0xwcm9CR3pkQUE0ZA1pRX1hlYXhLZA3lOZAHZA0SDZAER1VWcmh1QVRob0pnVVRIa1I0eXZAHUVpOOAZDZD');
 
-// Ambil data Instagram dari API Graph
-$igData = get_CURL("https://graph.instagram.com/me?fields=id,username,profile_picture_url,followers_count,media{media_url,permalink,timestamp}&access_token=$access_token");
+$igUsername = $instagramResult['username'];
+$igProfilePic = $instagramResult['profile_picture_url'];
+$igFollowers = $instagramResult['followers_count'];
 
-// Ambil data yang diperlukan dengan fallback jika datanya kosong
-$username = $igData['username'] ?? 'Unknown';
-$profilePicture = $igData['profile_picture_url'] ?? 'https://via.placeholder.com/200';
-$followers = $igData['followers_count'] ?? 0;
-$media = $igData['media']['data'] ?? [];
+$mediaResult = get_CURL('https://graph.instagram.com/me/media?fields=id,caption,media_url,permalink,thumbnail_url,media_type,timestamp&access_token=IGAAjx0ZB5JZBJlBZAE4zazBNZAWttT2U3bFRzMXhycXVsWFYyMGpPYUhPZADRfeDBYZAWhWWVN6VTNRczB0dTRhX01RTDFaeTAtZAXlTQ0xwcm9CR3pkQUE0ZA1pRX1hlYXhLZA3lOZAHZA0SDZAER1VWcmh1QVRob0pnVVRIa1I0eXZAHUVpOOAZDZD');
+
+$igMedia = array_slice($mediaResult['data'], 0, 3);
 ?>
 
 <!doctype html>
@@ -143,30 +142,26 @@ $media = $igData['media']['data'] ?? [];
           <div class="col-md-5">
             <div class="row">
               <div class="col-md-4">
-                <img src="<?= $profilePicture; ?>" width="200" class="rounded-circle img-thumbnail">
+                  <img src="<?=$igProfilePic;?>" width="200" class="rounded-circle img-thumbnail">
               </div>
               <div class="col-md-8">
-                <h5>@<?= $username; ?></h5>
-                <p><?= $followers; ?> Followers.</p>
-                <a href="https://instagram.com/<?= $username; ?>" target="_blank" class="btn btn-outline-primary btn-sm">Follow</a>
+                  <h5><?=$igUsername;?></h5>
+                  <p><?=$igFollowers;?> Followers</p>
               </div>
             </div>
-
-            <!-- Menampilkan semua postingan IG -->
-            <div class="row justify-content-center mt-3">
-              <?php foreach (array_slice($media, 0, 8) as $post): ?>
-                <div class="col-auto mb-2">
-                  <a href="<?= $post['permalink']; ?>" target="_blank">
-                    <img src="<?= $post['media_url']; ?>" alt="Instagram Post" 
-                        class="rounded" 
-                        style="width: 100px; height: 100px; object-fit: cover;">
-                  </a>
-                </div>
-              <?php endforeach; ?>
+            <div class="row pt-3 mb-3">
+              <div class="col">
+                <?php foreach($igMedia as $media): ?>
+                  <div class="ig-thumbnail" style="display:inline-block; margin-right:10px;">
+                    <a href="<?=$media['permalink'];?>" target="_blank">
+                    <img src="<?=$media['media_url'];?>" width="100">
+                    </a>
+                  </div>
+                <?php endforeach; ?>
+              </div>
             </div>
           </div>
-            
-           </div>
+          </div>
         </div>
 
       </div>
