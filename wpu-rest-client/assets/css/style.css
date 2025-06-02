@@ -1,0 +1,31 @@
+.badge {
+    margin-left: 3px;
+}
+
+body {
+    margin-top: 50px;
+}
+
+.jumbotron img {
+    width: 200px;
+}
+
+section {
+    min-height: 420px;
+}
+
+footer {
+    min-height: 50px;
+    padding-top:12px;
+}
+
+.ig-thumbnail {
+    width: 100px;
+    height: 100px;
+    float: left;
+    overflow: hidden;
+}
+.ig-thumbnail img {
+    width: 100px;
+
+}
